@@ -2,9 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
+    <title>Demo</title>
     <script type="text/javascript">
       let message = "Hey pal, here's a cool message for ya!"
-      let i = 0;
+      let i = 4;
       let running = false;
 
       window.onload = () => {
@@ -15,23 +16,40 @@
             return;
           }
           running = true;
-          i = 0;
+          i = 4;
+          displayMessageLoop();
+        };
+
+        let displayMessageStep = () => {
+          if (i == message.length * 4) {
+            i = 4;
+          }
           displayMessageTick();
-        }
+        };
 
         let displayMessageTick = () => {
           i++;
-          let messageSubstring = message.substr(0, i);
+          let chars = i >> 2;
+          let extra = i % 4
+          let messageSubstring = message.substr(0, chars);
+          if (extra) {
+            messageSubstring += `\x33${extra}`;
+          }
           messageDiv.innerHTML = messageSubstring;
-          if (i != message.length) {
-            setTimeout(displayMessageTick, 50);
+        };
+
+        let displayMessageLoop = () => {
+          displayMessageTick();
+          if (i != message.length * 4) {
+            setTimeout(displayMessageLoop, 12);
           }
           else {
             running = false;
           }
-        }
+        };
 
-        document.getElementById('button').onclick = displayMessage;
+        document.getElementById('step').onclick = displayMessageStep;
+        document.getElementById('restart').onclick = displayMessage;
 
         displayMessage();
       }
@@ -53,6 +71,10 @@
         align-items: left;
         width: 300px;
       }
+
+      .button-panel {
+        display: inline-block;
+      }
     </style>
   </head>
   <body>
@@ -60,7 +82,10 @@
       <div class="center">
         <pre class="message" id="message">
         </pre>
-        <button id="button">Restart</button>
+        <div class="button-panel">
+          <button id="step">Step</button>
+          <button id="restart">Restart</button>
+        </div>
       </div>
     </div>
   </body>
