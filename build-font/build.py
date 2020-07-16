@@ -29,17 +29,42 @@ font.addLookup(lookup_name, "gsub_ligature", (), lang_tuple)
 font.addLookupSubtable(lookup_name, subtable_name)
 
 glyph = font.createChar(ord('!'), "!")
-draw_box(glyph, 1)
+draw_box(glyph)
 
 glyph = font.createChar(0x200d, "zwj")
-draw_box(glyph, 2)
+glyph.width = 0
 
 glyph = font.createChar(ord('1'), "one")
-draw_box(glyph, 3)
+draw_box(glyph)
+
+glyph = font.createChar(ord('2'), "two")
+draw_box(glyph)
+
+glyph = font.createChar(ord('3'), "three")
+draw_box(glyph)
+
+glyph = font.createChar(-1, "zwj_1")
+glyph.width = 0
+glyph.addPosSub(subtable_name, ('one', 'zwj', 'one'))
+
+glyph = font.createChar(-1, "zwj_2")
+glyph.width = 0
+glyph.addPosSub(subtable_name, ('one', 'zwj', 'two'))
+
+glyph = font.createChar(-1, "zwj_3")
+glyph.width = 0
+glyph.addPosSub(subtable_name, ('one', 'zwj', 'three'))
 
 glyph = font.createChar(-1, "excl_1")
-draw_box(glyph, 4)
+draw_box(glyph, 2)
+glyph.addPosSub(subtable_name, ('!', 'one', 'zwj', 'one'))
 
-glyph.addPosSub(subtable_name, ('!', 'zwj', 'one'))
+glyph = font.createChar(-1, "excl_2")
+draw_box(glyph, 3)
+glyph.addPosSub(subtable_name, ('!', 'one', 'zwj', 'two'))
+
+glyph = font.createChar(-1, "excl_3")
+draw_box(glyph, 4)
+glyph.addPosSub(subtable_name, ('!', 'one', 'zwj', 'three'))
 
 font.generate("../fonts/" + font_name)
