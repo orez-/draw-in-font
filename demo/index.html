@@ -4,7 +4,8 @@
     <meta charset="utf-8"/>
     <title>Demo</title>
     <script type="text/javascript">
-      let message = "Hey pal, here's a cool message for ya!"
+      // let message = "Hey pal, here's a cool message for ya!"
+      let message = "!!!!! 1 2 3 !!!!!!!";
       let i = 0;
       let full = message.length * 4;
       let running = false;
@@ -34,7 +35,7 @@
           i++;
           let messageSubstring = message.substr(0, chars);
           if (extra) {
-            messageSubstring += `\x33${extra}`;
+            messageSubstring += `&zwj;${extra}`;
           }
           messageDiv.innerHTML = messageSubstring;
         };
