@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <script type="text/javascript">
+      let message = "Hey pal, here's a cool message for ya!"
+      let i = 0;
+      let running = false;
+
+      window.onload = () => {
+        let messageDiv = document.getElementById('message');
+
+        let displayMessage = () => {
+          if (running) {
+            return;
+          }
+          running = true;
+          i = 0;
+          displayMessageTick();
+        }
+
+        let displayMessageTick = () => {
+          i++;
+          let messageSubstring = message.substr(0, i);
+          messageDiv.innerHTML = messageSubstring;
+          if (i != message.length) {
+            setTimeout(displayMessageTick, 50);
+          }
+          else {
+            running = false;
+          }
+        }
+
+        document.getElementById('button').onclick = displayMessage;
+
+        displayMessage();
+      }
+    </script>
+
+    <style type="text/css">
+      .center-container {
+        height: 100%;
+      }
+
+      .center {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .message {
+        align-items: left;
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center-container">
+      <div class="center">
+        <pre class="message" id="message">
+        </pre>
+        <button id="button">Restart</button>
+      </div>
+    </div>
+  </body>
+</html>
