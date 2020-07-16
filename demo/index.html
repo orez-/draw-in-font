@@ -5,7 +5,8 @@
     <title>Demo</title>
     <script type="text/javascript">
       let message = "Hey pal, here's a cool message for ya!"
-      let i = 4;
+      let i = 0;
+      let full = message.length * 4;
       let running = false;
 
       window.onload = () => {
@@ -16,21 +17,21 @@
             return;
           }
           running = true;
-          i = 4;
+          i = 0;
           displayMessageLoop();
         };
 
         let displayMessageStep = () => {
-          if (i == message.length * 4) {
-            i = 4;
+          if (i == full) {
+            i = 0;
           }
           displayMessageTick();
         };
 
         let displayMessageTick = () => {
+          let chars = (i >> 2) + 1;
+          let extra = (i + 1) % 4
           i++;
-          let chars = i >> 2;
-          let extra = i % 4
           let messageSubstring = message.substr(0, chars);
           if (extra) {
             messageSubstring += `\x33${extra}`;
@@ -40,7 +41,7 @@
 
         let displayMessageLoop = () => {
           displayMessageTick();
-          if (i != message.length * 4) {
+          if (i != full) {
             setTimeout(displayMessageLoop, 12);
           }
           else {
@@ -56,6 +57,10 @@
     </script>
 
     <style type="text/css">
+      @font-face {
+        font-family: 'drawfont';
+        src: url('../fonts/draw_in.ttf') format('truetype');
+      }
       .center-container {
         height: 100%;
       }
@@ -68,6 +73,7 @@
       }
 
       .message {
+        font-family: drawfont;
         align-items: left;
         width: 300px;
       }
